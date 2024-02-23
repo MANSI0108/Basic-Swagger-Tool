@@ -1,0 +1,179 @@
+openapi: 3.1.0
+info:
+  title: sampleApi
+  description: SampleApi-a API which is write docs
+  version: 1.1.0
+  contact: 
+    email: mansisojitra0108@gmail.com
+    url: "https://sample.dev"
+
+servers:
+  - url: "{Protocol}://localhost:5000/api/{Version}"
+    description: localhost version server url
+    variables:
+      Version:
+        enum:
+          - v1
+          - v2
+        default: v1  
+      Protocol:
+         enum:
+          - http
+          - https
+         default: http
+
+         
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+
+    BearerAuth:
+      type: http
+      scheme: bearer   
+
+paths:
+  /lco:
+    get:
+      tags:
+        - String
+      summary: return a greet message from LCO
+      responses:
+        200:
+          description: All Good
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+                    
+  /lcoObject:
+    get:
+      tags:
+        - Object
+      summary: return a greet Object from LCO-Object
+      responses:
+        200:
+          description: All Good
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+
+                  name:
+                     type: string
+
+                  price:
+                      type: string   
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /lcoArray:
+    get:
+      tags:
+        - Array
+      summary: return a greet Object from LCO-Array
+      responses:
+        200:
+          description: All Good
+          content:
+            application/json:
+              schema:
+                type: Array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: string   
+        400:
+          description: Bad request
+        500:
+          description: internal server error        
+
+  /course/{courseId}:
+    get:
+      tags:
+        - String
+      summary: return a Object which is request by id
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          default: 2
+          schema:
+            type: string    
+      responses:
+        200:
+          description: All Good
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: string   
+        400:
+          description: Bad request
+        500:
+          description: internal server error                            
+
+  /addcourse: 
+    post:
+      tags:
+        - String
+      summary: add new course to existing course
+      consumes: 
+        - application/json
+      produces:
+        - application/json 
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: string      
+      responses:
+        200:
+          description: All Good
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: string   
+        400:
+          description: Bad request
+        500:
+          description: internal server error           
